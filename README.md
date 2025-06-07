@@ -8,8 +8,6 @@ A collection of my personal configuration files ("dotfiles") for various tools a
 
 ## Installation
 
-### Clone as Bare Repository
-
 1. Clone the repository as a bare repository
 
 2. Add the config alias to your shell configuration:
