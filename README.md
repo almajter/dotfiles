@@ -5,6 +5,10 @@ A collection of my personal configuration files ("dotfiles") for various tools a
 ## Table of Contents
 
 - [Tmux](.tmux.conf) - Terminal multiplexer configuration
+   - To reload:
+  ```sh
+  tmux source-file ~/.tmux.conf
+  ```
 
 ## Installation
 
