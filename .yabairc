@@ -1,0 +1,106 @@
+#!/usr/bin/env sh
+
+# === UI & Animation Settings ===
+
+yabai -m config window_shadow on
+# Enables macOS drop shadows for windows.
+
+yabai -m config window_opacity off
+# Disables per-window opacity — all windows are fully opaque.
+
+yabai -m config active_window_opacity 1.0
+# Fully opaque focused window (only used if window_opacity is on).
+
+yabai -m config normal_window_opacity 0.90
+# Slightly transparent unfocused windows (only used if window_opacity is on).
+
+yabai -m config window_opacity_duration 0.0
+# No fade animation when window opacity changes.
+
+yabai -m config window_animation_duration 0.0
+# No animation when windows move/resize.
+
+yabai -m config window_animation_easing ease_out_circ
+# Easing function for window animations (has no effect if duration is 0).
+
+yabai -m config insert_feedback_color 0xffd75f5f
+# Red-ish highlight when inserting a new window into the layout.
+
+# === Window Layout and Placement ===
+
+yabai -m config layout bsp
+# Default layout: BSP (Binary Space Partitioning).
+
+yabai -m config split_type auto
+# Yabai automatically chooses horizontal/vertical split direction.
+
+yabai -m config split_ratio 0.50
+# Default ratio for new splits is 50%.
+
+yabai -m config auto_balance off
+# Don’t rebalance other windows when one is closed.
+
+yabai -m config window_placement second_child
+# New windows go as the second child (instead of replacing the first).
+
+yabai -m config window_insertion_point focused
+# New windows appear next to the currently focused one.
+
+yabai -m config window_zoom_persist on
+# Maintain zoom state (e.g., fullscreen) across layout changes.
+
+# === Display & Space Behavior ===
+
+yabai -m config external_bar off:40:0
+# No external bar (like sketchybar); leaves a 40px top offset.
+
+yabai -m config menubar_opacity 1.0
+# macOS menubar stays fully opaque.
+
+yabai -m config display_arrangement_order default
+# Use default macOS display order.
+
+yabai -m config window_origin_display default
+# New windows spawn on the focused display.
+
+# === Mouse & Keyboard Interaction ===
+
+yabai -m config mouse_follows_focus off
+# Moving focus via keyboard does NOT move the mouse cursor.
+
+yabai -m config focus_follows_mouse off
+# Hovering over a window does NOT change focus automatically.
+
+yabai -m config mouse_modifier fn
+# Use the `fn` key to drag/resize windows with the mouse.
+
+yabai -m config mouse_action1 move
+# fn + left click = move window.
+
+yabai -m config mouse_action2 resize
+# fn + right click = resize window.
+
+yabai -m config mouse_drop_action swap
+# Dropping a dragged window on another swaps them.
+
+# === Padding & Gaps ===
+
+yabai -m config top_padding 12
+yabai -m config bottom_padding 12
+yabai -m config left_padding 12
+yabai -m config right_padding 12
+# Padding around the edges of the screen.
+
+yabai -m config window_gap 6
+# Gap between tiled windows.
+
+# === Stacking Behavior ===
+
+yabai -m config window_stack_on_create on
+# Automatically stack new windows in stack layout.
+
+yabai -m config auto_stack on
+# Automatically manage stacking in stack layout.
+
+echo "✅ yabai configuration loaded."
+

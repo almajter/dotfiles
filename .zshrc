@@ -20,12 +20,12 @@ export NVM_DIR="$HOME/.nvm"
     [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 # <<< nvm initialize <<<
 
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-. "$HOME/.local/bin/env"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - zsh)"
+
+# Alias for config files
 alias config='git --git-dir=/Users/majal/Razvijam/dotfiles.git --work-tree=/Users/majal'
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
