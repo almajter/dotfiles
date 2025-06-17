@@ -24,6 +24,11 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```sh
   skhd --reload
   ```
+- [Vim](.vimrc) - Vim text editor
+   - To reload inside vim:
+  ```sh
+  :source ~/.vimrc
+  ```
 
 ## Installation
 
