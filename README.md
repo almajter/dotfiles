@@ -9,6 +9,21 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```sh
   tmux source-file ~/.tmux.conf
   ```
+- [Zsh](.zshrc) - Z shell
+   - To reload:
+  ```sh
+  source ~/.zshrc
+  ```
+- [Yabai](.yabairc) - Yabai tiling window manager
+   - To reload:
+  ```sh
+  yabai --restart-service
+  ```
+- [Skhd](.skhdrc) - Skhd hot key management tool
+   - To reload:
+  ```sh
+  skhd --reload
+  ```
 
 ## Installation
 
