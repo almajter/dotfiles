@@ -29,6 +29,8 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```sh
   :source ~/.vimrc
   ```
+- [Ghostty](.config/ghostty/config) - Ghostty terminal emulator
+   - To reload: `Cmd+Shift+,`
 
 ## Installation
 
