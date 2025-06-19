@@ -94,7 +94,7 @@ set mouse=a          " Enable mouse support in all modes
 " CLIPBOARD INTEGRATION
 " ===========================
 
-set clipboard=unnamedplus " Use system clipboard (great for macOS)
+" set clipboard=unnamedplus " Use system clipboard (great for macOS)
 
 " ===========================
 " COLORS

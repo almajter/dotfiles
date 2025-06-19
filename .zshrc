@@ -134,3 +134,7 @@ alias config='git --git-dir=/Users/majal/Razvijam/dotfiles.git --work-tree=/User
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# Replace vim with homebrew version
+export PATH="/opt/homebrew/bin:$PATH"
+
