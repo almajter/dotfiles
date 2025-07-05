@@ -130,7 +130,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init - zsh)"
 
 # Alias for config files
-alias config='git --git-dir=/Users/majal/Razvijam/dotfiles.git --work-tree=/Users/majal'
+alias config='git --git-dir=/Users/MajAl/dotfiles.git --work-tree=/Users/MajAl'
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
