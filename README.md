@@ -31,6 +31,7 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```
 - [Ghostty](.config/ghostty/config) - Ghostty terminal emulator
    - To reload: `Cmd+Shift+,`
+- [Alacritty](.config/alacritty/alacritty.toml) - Alacritty terminal emulator
 
 ## Installation
 
