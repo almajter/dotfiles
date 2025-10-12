@@ -125,3 +125,5 @@ export PATH="/opt/homebrew/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 # <<< Java home setup <<<
 
+# Go program installations (GOBIN)
+export PATH=$PATH:$HOME/go/bin
