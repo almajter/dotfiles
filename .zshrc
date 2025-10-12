@@ -118,9 +118,6 @@ eval "$(pyenv init - zsh)"
 # Alias for config files
 alias config='git --git-dir=/Users/MajAl/dotfiles.git --work-tree=/Users/MajAl'
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
 # Prioritize Homebrew binaries over system ones
 export PATH="/opt/homebrew/bin:$PATH"
 
