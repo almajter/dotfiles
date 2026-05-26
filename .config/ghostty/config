@@ -1,1 +1,5 @@
-font-size = 20
+font-size = 13
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = ssh-terminfo,ssh-env,no-cursor
+
