@@ -82,7 +82,7 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
+# if [[ -n $ssh_connection ]]; then
 #   export EDITOR='vim'
 # else
 #   export EDITOR='nvim'
@@ -118,6 +118,10 @@ eval "$(pyenv init - zsh)"
 # Alias for config files
 alias config='git --git-dir=/Users/MajAl/dotfiles.git --work-tree=/Users/MajAl'
 
+# Nvim aliases
+alias vi='nvim'
+alias vim='nvim'
+
 # Prioritize Homebrew binaries over system ones
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -125,3 +129,5 @@ export PATH="/opt/homebrew/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 # <<< Java home setup <<<
 
+# Go program installations (GOBIN)
+export PATH=$PATH:$HOME/go/bin
