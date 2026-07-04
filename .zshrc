@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use colored-man-pages)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,19 +115,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init - zsh)"
 # <<< pyenv initialize <<<
 
-# Alias for config files
-alias config='git --git-dir=/Users/MajAl/dotfiles.git --work-tree=/Users/MajAl'
-
-# Nvim aliases
-alias vi='nvim'
-alias vim='nvim'
-
-# Prioritize Homebrew binaries over system ones
-export PATH="/opt/homebrew/bin:$PATH"
-
-# >>> Java home setup >>>
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-# <<< Java home setup <<<
-
-# Go program installations (GOBIN)
+# >>> Go program installations (GOBIN) >>>
 export PATH=$PATH:$HOME/go/bin
+# <<< Go program installations (GOBIN) <<<
+
+# >>> Alias for config files >>>
+alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
+# <<< Alias for config files <<<
