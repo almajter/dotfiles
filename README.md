@@ -14,16 +14,6 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```sh
   source ~/.zshrc
   ```
-- [Yabai](.yabairc) - Yabai tiling window manager
-   - To reload:
-  ```sh
-  yabai --restart-service
-  ```
-- [Skhd](.skhdrc) - Skhd hot key management tool
-   - To reload:
-  ```sh
-  skhd --reload
-  ```
 - [Vim](.vimrc) - Vim text editor
    - To reload inside vim:
   ```sh
@@ -31,7 +21,6 @@ A collection of my personal configuration files ("dotfiles") for various tools a
   ```
 - [Ghostty](.config/ghostty/config) - Ghostty terminal emulator
    - To reload: `Cmd+Shift+,`
-- [Alacritty](.config/alacritty/alacritty.toml) - Alacritty terminal emulator
 
 ## Installation
 
