@@ -122,3 +122,8 @@ export PATH=$PATH:$HOME/go/bin
 # >>> Alias for config files >>>
 alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
 # <<< Alias for config files <<<
+
+# >>> .local/bin >>>
+export PATH="$HOME/.local/bin:$PATH"
+# <<< .local/bin <<<
+
