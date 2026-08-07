@@ -1,0 +1,16 @@
+[window]
+# Left Option stays macOS composition (tilde/accents, e.g. Option+N -> ~).
+# Right Option sends Meta/Esc sequences to the terminal (Alt+k, Alt+w, etc).
+option_as_alt = "OnlyRight"
+
+[cursor]
+# Blinking block cursor, easier to spot than the default static one.
+style = { shape = "Block", blinking = "Always" }
+blink_interval = 500
+
+[keyboard]
+bindings = [
+    { key = "Return", mods = "Shift", chars = "\n" }, 
+    { key = "p", mods = "Alt", chars = "\u001Bp" }
+]
+
