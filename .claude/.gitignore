@@ -1,0 +1,16 @@
+# ~/.claude holds a lot of machine-local runtime state (transcripts, caches,
+# session data, brew-installed hooks/skills). Ignore everything by default and
+# opt files in explicitly, so new runtime dirs can never leak into the repo.
+*
+
+!.gitignore
+!CLAUDE.md
+!RTK.md
+!settings.json
+!statusline.sh
+
+# NOT tracked on purpose:
+#   projects/ history.jsonl sessions/ telemetry/  -- conversation contents
+#   plugins/ cache/ backups/ file-history/        -- reproducible / large
+#   hooks/peon-ping/ skills/peon-ping-*           -- `brew install peon-ping`
+#   settings.local.json                           -- if ever added, keep local
