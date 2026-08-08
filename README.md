@@ -16,11 +16,13 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
   ```sh
   source ~/.zshrc
   ```
-- [Vim](.vimrc) - Vim text editor
+- [Vim](.vimrc) - Vim text editor (plain `vim` only; Neovim reads its own config)
    - To reload inside vim:
   ```sh
   :source ~/.vimrc
   ```
+- [Neovim](.config/nvim/init.lua) - Neovim, see [below](#neovim)
+   - To reload: restart `nvim` (Lua modules are cached; `:source` won't re-run them)
 - [Alacritty](.config/alacritty/alacritty.toml) - Alacritty terminal emulator
    - To reload: quit and relaunch (`option_as_alt` is read at startup)
 - [Ghostty](.config/ghostty/config) - Ghostty terminal emulator
@@ -56,7 +58,8 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
    config checkout local
    ```
 
-External dependencies these configs expect: `fzf`, `nvm`, `pyenv`, `tmux` with
+External dependencies these configs expect: `fzf`, `nvm`, `pyenv`, `nvim`
+(0.9+, required by lazy.nvim), `tmux` with
 [TPM](https://github.com/tmux-plugins/tpm), and (for the Claude Code hooks)
 `rtk` and `peon-ping`.
 
@@ -68,6 +71,109 @@ After installation, use the `config` command as you would use `git`.
 
 - Push changes to the `local` branch (which does not contain README.md)
 - Create a pull request from `local` to `main` when ready to merge changes
+
+---
+
+# Neovim
+
+Built from scratch rather than forked from a distribution (kickstart, LazyVim).
+`.vimrc` is untouched and still drives plain `vim`; the two share nothing.
+
+```
+.config/nvim/
+├── init.lua              leader + requires, nothing else
+├── lazy-lock.json        pinned plugin commits — tracked on purpose
+└── lua/
+    ├── config/
+    │   ├── options.lua   vim.opt settings, ported from .vimrc
+    │   ├── keymaps.lua   vim.keymap.set
+    │   └── lazy.lua      lazy.nvim bootstrap
+    └── plugins/          one file per plugin, auto-imported
+```
+
+Adding a plugin means dropping a new file in `lua/plugins/` that returns a
+spec. There is no central list to keep in sync — `{ import = "plugins" }`
+picks up the whole directory.
+
+## Options
+
+Roughly half of `.vimrc` is redundant under Neovim and was dropped rather than
+ported: `syntax enable`, `encoding`, `filetype plugin/indent on`, `autoread`,
+`backspace`, `wildmenu`, `hlsearch`, `incsearch`, `mouse`, `ruler` are all
+defaults, and `t_vb` doesn't exist (Neovim has no termcap options).
+
+Three settings needed translating rather than copying:
+
+| `.vimrc` | `.config/nvim` | Why |
+|---|---|---|
+| `smarttab` | `softtabstop=2` | Neovim dropped smarttab's role |
+| `clipboard=unnamed` | `clipboard=unnamedplus` | same macOS pasteboard, but `unnamedplus` is what plugins assume |
+| `viminfo^=%` | `shada:append("%")` | same feature, renamed |
+
+Appearance is left at Neovim's defaults — no colorscheme plugin, no
+`termguicolors` (auto-detected), no `scrolloff`/`signcolumn` overrides. The
+built-in `default` scheme is maintained upstream; `desert` is not.
+`number`, `relativenumber` and `cursorline` carry over from `.vimrc`.
+
+Swapfiles and backups are off, as in `.vimrc`, but `undofile` is **on** —
+undo history persists to disk, which is what the swapfiles were half doing.
+
+## Plugin management
+
+[lazy.nvim](https://github.com/folke/lazy.nvim), bootstrapped in
+`lua/config/lazy.lua`. `:Lazy` opens the dashboard — `I` install, `U` update,
+`X` clean, `?` help.
+
+Two non-obvious choices:
+
+- **lazy.nvim is pinned to its release tag** (`version = "*"`). Left to itself
+  it tracks `main`, whose tip is *months behind* the tagged releases — the
+  standard bootstrap snippet clones `--branch=stable` and then silently
+  downgrades on first sync.
+- **`rocks = { enabled = false }`.** luarocks support wants hererocks, which
+  isn't installed; nothing here needs it, and leaving it on is what puts a
+  permanent ERROR in `:checkhealth`.
+
+`lazy-lock.json` is tracked (a distribution's `.gitignore` will often exclude
+it). It pins every plugin to a commit, so `:Lazy restore` after a bad update
+puts the whole set back.
+
+## Keymaps
+
+Leader is `<Space>`. Deliberately short — only things that fix a real
+annoyance.
+
+| Key | Action |
+|---|---|
+| `<Esc>` | clear search highlight |
+| `Ctrl+h/j/k/l` | move between splits (see caveat below) |
+| `Ctrl+d` / `Ctrl+u` | half page down/up, cursor re-centred |
+| `J` / `K` *(visual)* | move the selection down/up and reindent |
+| `<` / `>` *(visual)* | indent, keeping the selection |
+| `<leader>q` | diagnostics to location list |
+
+**Caveat on `Ctrl+h/j/k/l`:** tmux's `vim-tmux-navigator` forwards these into
+nvim (see the tmux section below), and the mappings here move between *nvim*
+splits — but the handoff is one-way. At the edge of nvim's split layout the
+keystroke stops there instead of continuing on to the next tmux pane, because
+the nvim half of `vim-tmux-navigator` isn't installed. Seamless crossing needs
+that plugin on both sides.
+
+## Git diffs in nvim
+
+`~/.gitconfig` (not tracked here) sets `diff.tool = nvimdiff` and
+`difftool.prompt = false`, so `git difftool` opens side-by-side in nvim,
+file after file without a prompt between each.
+
+| Key | Action |
+|---|---|
+| `]c` / `[c` | next / previous change |
+| `do` / `dp` | pull the other pane's version in / push yours out |
+| `:qa` | close both panes, move to the **next file** |
+| `:cq` | abort the whole difftool run, skipping remaining files |
+
+`git difftool -d` opens the entire changeset at once instead of file-by-file.
+`git difftool -t vscode` still falls back to VS Code.
 
 ---
 
@@ -86,6 +192,9 @@ These are global (no prefix needed) and vim-aware: when the active pane is
 running `vim`/`nvim`, the keystroke passes through to vim's own split
 navigation instead of moving tmux panes. Handled by the `vim-tmux-navigator`
 plugin (see Plugins below) — no hand-rolled `is_vim` shell detection.
+
+The nvim side of that handoff is only half-wired — see the
+[Neovim keymaps caveat](#keymaps).
 
 **Consequence:** `Ctrl+h/j/k/l` never reach the shell anymore (tmux
 intercepts them first) — that's why `clear-screen` and `kill-line` had to
@@ -229,6 +338,9 @@ work here.
   immediately (key tables are global), no need to repeat per pane/window.
   New/changed `@plugin` lines also need `prefix + I` to actually install.
 - zsh: `source ~/.zshrc` in each open pane (or open a new pane/window).
+- Neovim: restart `nvim`. `:source` re-runs a file but `require` caches Lua
+  modules, so edits to `lua/config/*.lua` won't take effect until the next
+  start. Plugin spec changes additionally need `:Lazy sync`.
 - Alacritty: quit and relaunch the app — `option_as_alt` is read at startup.
 - Claude Code: `settings.json` is picked up live; new hooks may need `/hooks`
   opened once, or a restart.
