@@ -5,6 +5,4 @@ vim.g.maplocalleader = " "
 
 require("config.options")
 require("config.keymaps")
-
--- Plugin manager gets bootstrapped here in step 2:
--- require("config.lazy")
+require("config.lazy")
