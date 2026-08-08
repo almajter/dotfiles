@@ -154,5 +154,5 @@
   "skipDangerousModePermissionPrompt": true,
   "disableAutoMode": "disable",
   "editorMode": "normal",
-  "fileCheckpointingEnabled": true
+  "fileCheckpointingEnabled": false
 }
