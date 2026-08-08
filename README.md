@@ -160,7 +160,7 @@ annoyance.
 | `<leader>q` | diagnostics to location list |
 
 `Ctrl+h/j/k/l` are not defined in `keymaps.lua` — they come from
-`vim-tmux-navigator` (see [Plugins](#plugins-1) above), which is what makes
+`vim-tmux-navigator` (see [Plugins](#plugins) above), which is what makes
 them continue into the neighbouring tmux pane once you run out of nvim splits
 to move through.
 
@@ -199,7 +199,7 @@ navigation instead of moving tmux panes. Handled by the `vim-tmux-navigator`
 plugin (see Plugins below) — no hand-rolled `is_vim` shell detection.
 
 The plugin is installed on **both** sides — tmux via TPM, nvim via lazy.nvim
-(see [Neovim plugins](#plugins-1)). Both halves are required: the tmux side
+(see [Neovim plugins](#plugins)). Both halves are required: the tmux side
 alone gets the keystroke into nvim, but crossing back out at the edge of an
 nvim split layout needs the nvim side too.
 
