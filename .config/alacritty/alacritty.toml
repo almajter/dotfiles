@@ -10,7 +10,10 @@ blink_interval = 500
 
 [keyboard]
 bindings = [
-    { key = "Return", mods = "Shift", chars = "\n" }, 
+    # Shift+Enter as CSI u, not "\n" -- that's 0x0a == C-j, which tmux's
+    # vim-tmux-navigator binds to select-pane -D. Pairs with extended-keys
+    # in .tmux.conf.
+    { key = "Return", mods = "Shift", chars = "\u001B[13;2u" },
     { key = "p", mods = "Alt", chars = "\u001Bp" }
 ]
 
