@@ -55,6 +55,15 @@ sessions, brew-managed hooks) that must never be committed. **A new file under
 agent, or command means editing `.claude/.gitignore` too, or it silently stays
 untracked.
 
+## Keep README.md in sync
+
+`README.md` documents usage for every tracked config (plugin tables, keymap
+tables, "Reloading after config changes"). Any change to a tracked file that
+alters user-facing behavior — a new nvim plugin, a changed keymap, a new tmux
+binding — needs a matching README edit in the *same* piece of work, not a
+follow-up. Since README.md lives only on `main` (see below), this means an
+extra plumbing commit alongside the `local` commit that made the change.
+
 ## Branches
 
 Work lands on `local` and reaches `main` by pull request.
