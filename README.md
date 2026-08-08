@@ -136,8 +136,11 @@ undo history persists to disk, which is what the swapfiles were half doing.
 | `plenary.nvim` | telescope's dependency, not used directly |
 | `nvim-treesitter` | parser-based syntax highlighting and indentation |
 | `vim-fugitive` | git status/stage/diff/blame/log from inside nvim |
+| `gitsigns.nvim` | inline gutter signs (added/changed/deleted lines) + current-line blame virtual text |
 
 Telescope, vim-tmux-navigator and vim-fugitive load on their keys/commands.
+`gitsigns.nvim` loads eagerly on buffer read (`event = { "BufReadPre", "BufNewFile" }`) since
+its gutter signs need to be live from the first file opened.
 `nvim-treesitter` is `lazy = false` — highlighting has to attach to the first
 buffer read, so deferring it defeats the point.
 
@@ -206,6 +209,25 @@ The native sorter is built with `make` at install time and only *then* loaded
 (`pcall(telescope.load_extension, "fzf")`) — on a machine without a compiler
 the build is skipped and telescope quietly falls back to its Lua sorter
 instead of erroring on every start.
+
+### Gitsigns
+
+| Key | Action |
+|---|---|
+| `]c` / `[c` | next / previous git hunk |
+| `<leader>hs` | stage hunk |
+| `<leader>hu` | undo stage hunk |
+| `<leader>hr` | reset hunk (discard) |
+| `<leader>hp` | preview hunk diff inline |
+| `<leader>hb` | full blame for current line |
+| `<leader>tb` | toggle current-line blame virtual text |
+
+VS Code-style live git status: a `│` sign in the gutter for added/changed
+lines, `_`/`‾`/`~` for deletions, and a dim inline blame annotation at the
+end of the current line (300ms delay, off by default until you move the
+cursor onto a changed line — toggle with `<leader>tb` if it gets noisy).
+Complements Fugitive rather than replacing it: gitsigns is for glance-and-hunk
+work, Fugitive for the full status window and commit/push.
 
 ## Plugin management
 
