@@ -9,6 +9,14 @@
 !settings.json
 !statusline.sh
 
+# Own skills only. Each level has to be re-included explicitly: `*` above
+# ignores at every depth, and git won't descend into an ignored directory, so a
+# negation inside one never fires.
+!skills/
+skills/*
+!skills/dotfiles/
+!skills/dotfiles/**
+
 # NOT tracked on purpose:
 #   projects/ history.jsonl sessions/ telemetry/  -- conversation contents
 #   plugins/ cache/ backups/ file-history/        -- reproducible / large
