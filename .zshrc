@@ -1,124 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting you-should-use)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $ssh_connection ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# >>> nvm initialize >>>
-export NVM_DIR="$HOME/.nvm"
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-# <<< nvm initialize <<<
-
-# >>> pyenv initialize >>>
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
-# <<< pyenv initialize <<<
-
-# >>> Go program installations (GOBIN) >>>
-export PATH=$PATH:$HOME/go/bin
-# <<< Go program installations (GOBIN) <<<
-
 # >>> Alias for config files >>>
 alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
 # <<< Alias for config files <<<
@@ -127,3 +6,114 @@ alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
 export PATH="$HOME/.local/bin:$PATH"
 # <<< .local/bin <<<
 
+# >>> zinit bootstrap >>>
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d $ZINIT_HOME/.git ]]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+# <<< zinit bootstrap <<<
+
+# --- OMZ libraries required by the robbyrussell theme + git plugins ---
+setopt prompt_subst
+zstyle ':omz:alpha:lib:git' async-prompt no
+zinit snippet OMZL::git.zsh
+zinit snippet OMZL::theme-and-appearance.zsh
+zinit snippet OMZL::functions.zsh
+
+# --- OMZ libs ---
+zinit snippet OMZL::directories.zsh
+zinit snippet OMZL::history.zsh
+zinit snippet OMZL::completion.zsh
+zinit snippet OMZL::key-bindings.zsh
+
+# >>> tmux pane-nav key fixes >>>
+# Ctrl-h/j/k/l belong to tmux pane nav, so they never reach zsh. Unbind ^H
+# (OMZ maps it to backspace via terminfo kbs) and move the casualties off the
+# nav keys. Physical Backspace still works via its own DEL/^? binding.
+bindkey -r '^H'
+bindkey '^G' clear-screen   # was ^L
+bindkey '^[k' kill-line     # was ^K
+# <<< tmux pane-nav key fixes <<<
+
+# --- Theme (robbyrussell) ---
+zinit snippet OMZT::robbyrussell
+
+# --- OMZ plugins (deferred: aliases only, prompt's git lib already loaded above) ---
+zinit ice wait lucid
+zinit snippet OMZP::git
+
+# --- External plugins ---
+zinit wait lucid for \
+  atload"_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  atinit"zicompinit; zicdreplay; compdef _tmux_sessions to tks" \
+    zsh-users/zsh-syntax-highlighting
+
+# >>> nvm lazy initialize >>>
+export NVM_DIR="$HOME/.nvm"
+_load_nvm() {
+  unset -f nvm node npm npx 2>/dev/null   # remove these stubs
+  local brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+  [ -s "$brew_prefix/opt/nvm/nvm.sh" ] && \. "$brew_prefix/opt/nvm/nvm.sh"
+  [ -s "$brew_prefix/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$brew_prefix/opt/nvm/etc/bash_completion.d/nvm"
+}
+nvm()  { _load_nvm; nvm "$@"; }
+node() { _load_nvm; node "$@"; }
+npm()  { _load_nvm; npm "$@"; }
+npx()  { _load_nvm; npx "$@"; }
+# <<< nvm lazy initialize <<<
+
+# >>> pyenv lazy initialize >>>
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_SHELL=zsh
+export PATH="$PYENV_ROOT/shims:$PATH"
+pyenv() {
+  unset -f pyenv
+  eval "$(command pyenv init - --no-rehash zsh)"   # shims already on PATH above
+  pyenv "$@"
+}
+# <<< pyenv lazy initialize <<<
+
+# >>> Go program installations (GOBIN) >>>
+export PATH=$PATH:$HOME/go/bin
+# <<< Go program installations (GOBIN) <<<
+
+# >>> fzf shell integration >>>
+# Ctrl-R fuzzy history search, Ctrl-T fuzzy file find, Alt-C fuzzy cd
+eval "$(fzf --zsh)"
+# <<< fzf shell integration <<<
+
+# >>> tmux aliases >>>
+alias tl='tmux list-sessions'
+
+# Attach to a session by name (default: $PWD's basename), creating it with
+# a "git" window if it doesn't exist yet.
+to() {
+  local session="${1:-${PWD:t}}"
+
+  if ! command tmux has-session -t "=$session" 2>/dev/null; then
+    command tmux new-session -d -s "$session" -n git -c "$PWD"
+  fi
+
+  if [[ -n $TMUX ]]; then
+    command tmux switch-client -t "=$session"
+  else
+    command tmux attach-session -t "=$session"
+  fi
+}
+
+tks() {
+  command tmux kill-session -t "$1"
+}
+
+# Tab-complete existing session names for `to`/`tks`.
+_tmux_sessions() {
+  local -a sessions
+  sessions=(${(f)"$(command tmux list-sessions -F '#S' 2>/dev/null)"})
+  compadd -a sessions
+}
+# Registered by the deferred zicompinit hook above -- compdef doesn't exist yet.
+# <<< tmux aliases <<<
