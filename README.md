@@ -59,7 +59,7 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
    ```
 
 External dependencies these configs expect: `fzf`, `nvm`, `pyenv`, `nvim`
-(0.9+, required by lazy.nvim), `tmux` with
+(0.9+, required by lazy.nvim), `ripgrep` (telescope), `tmux` with
 [TPM](https://github.com/tmux-plugins/tpm), and (for the Claude Code hooks)
 `rtk` and `peon-ping`.
 
@@ -123,6 +123,36 @@ undo history persists to disk, which is what the swapfiles were half doing.
 | Plugin | What it does |
 |---|---|
 | `vim-tmux-navigator` | the nvim half of `Ctrl+h/j/k/l` split ↔ pane navigation |
+| `telescope.nvim` | fuzzy finder — files, live grep, buffers, help |
+| `telescope-fzf-native.nvim` | native C sorter for telescope; compiled at install |
+| `plenary.nvim` | telescope's dependency, not used directly |
+
+Everything except `plenary` is lazy-loaded on its keys, so none of it runs at
+startup.
+
+### Telescope
+
+| Key | Action |
+|---|---|
+| `<leader>ff` | find files |
+| `<leader>fg` | live grep across the project |
+| `<leader>fb` | switch buffer |
+| `<leader>fh` | search help tags |
+| `<leader>fr` | reopen the last picker, query intact |
+| `<leader>fd` | diagnostics |
+| `<leader>/` | fuzzy-search inside the current buffer |
+
+`<Esc>` closes a picker directly from insert mode rather than first dropping
+into telescope's own normal mode.
+
+`find_files` passes `--hidden` to ripgrep, since dotfiles are the whole point
+of this repo and would otherwise be invisible. `.gitignore` is still respected,
+and `--glob !.git/*` keeps the object database out of the results.
+
+The native sorter is built with `make` at install time and only *then* loaded
+(`pcall(telescope.load_extension, "fzf")`) — on a machine without a compiler
+the build is skipped and telescope quietly falls back to its Lua sorter
+instead of erroring on every start.
 
 ## Plugin management
 
