@@ -6,11 +6,8 @@ local map = vim.keymap.set
 -- <Esc> clears search highlighting instead of leaving it on screen
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
--- Move between splits without the <C-w> prefix
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+-- <C-h/j/k/l> split navigation lives in plugins/tmux-navigator.lua, so the
+-- same keys cross seamlessly between nvim splits and tmux panes.
 
 -- Keep the cursor centred when jumping by half a page
 map("n", "<C-d>", "<C-d>zz", { desc = "Half page down, centred" })
