@@ -23,6 +23,12 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
   ```
 - [Neovim](.config/nvim/init.lua) - Neovim, see [below](#neovim)
    - To reload: restart `nvim` (Lua modules are cached; `:source` won't re-run them)
+- [Git](.gitconfig) - global git config, plus
+  [`.config/git/ignore`](.config/git/ignore) (global gitignore)
+   - `diff.tool = nvimdiff` — see [Git diffs in nvim](#git-diffs-in-nvim)
+   - `credential.https://github.com.username` is pinned. Without it, a second
+     stored account for the same host makes Git Credential Manager show an
+     account picker on every push
 - [Alacritty](.config/alacritty/alacritty.toml) - Alacritty terminal emulator
    - To reload: quit and relaunch (`option_as_alt` is read at startup)
 - [Ghostty](.config/ghostty/config) - Ghostty terminal emulator
@@ -227,7 +233,7 @@ to move through.
 
 ## Git diffs in nvim
 
-`~/.gitconfig` (not tracked here) sets `diff.tool = nvimdiff` and
+[`.gitconfig`](.gitconfig) sets `diff.tool = nvimdiff` and
 `difftool.prompt = false`, so `git difftool` opens side-by-side in nvim,
 file after file without a prompt between each.
 
