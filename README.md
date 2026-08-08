@@ -59,7 +59,9 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
    ```
 
 External dependencies these configs expect: `fzf`, `nvm`, `pyenv`, `nvim`
-(0.9+, required by lazy.nvim), `ripgrep` (telescope), `tmux` with
+(0.9+, required by lazy.nvim), `ripgrep` (telescope),
+`tree-sitter-cli` (nvim-treesitter — note it is a *separate* Homebrew formula
+from `tree-sitter`), `tmux` with
 [TPM](https://github.com/tmux-plugins/tpm), and (for the Claude Code hooks)
 `rtk` and `peon-ping`.
 
@@ -126,9 +128,38 @@ undo history persists to disk, which is what the swapfiles were half doing.
 | `telescope.nvim` | fuzzy finder — files, live grep, buffers, help |
 | `telescope-fzf-native.nvim` | native C sorter for telescope; compiled at install |
 | `plenary.nvim` | telescope's dependency, not used directly |
+| `nvim-treesitter` | parser-based syntax highlighting and indentation |
 
-Everything except `plenary` is lazy-loaded on its keys, so none of it runs at
-startup.
+Telescope and vim-tmux-navigator load on their keys. `nvim-treesitter` is
+`lazy = false` — highlighting has to attach to the first buffer read, so
+deferring it defeats the point.
+
+### Treesitter
+
+Uses nvim-treesitter's **`main`** branch, which is now upstream's default and
+targets Neovim 0.11+. Nearly every config and tutorial online still shows the
+`master` API, which no longer applies:
+
+| `master` (legacy) | `main` (here) |
+|---|---|
+| `configs.setup({ ensure_installed = {...} })` | `require("nvim-treesitter").install({...})` |
+| `highlight = { enable = true }` | `vim.treesitter.start(buf)` in a `FileType` autocmd |
+| `indent = { enable = true }` | set `indentexpr` per buffer |
+| parsers compiled with `cc` | parsers compiled by the **`tree-sitter` CLI** |
+
+That last row is a real dependency, not a detail — without the CLI on `$PATH`
+every parser fails to build with `ENOENT: 'tree-sitter'`. On Homebrew it is
+**`tree-sitter-cli`**, a separate formula from `tree-sitter` (which is
+library-only and usually already present as a Neovim dependency).
+
+Parsers install to `~/.local/share/nvim/site/parser/`, not into the plugin
+directory as `master` did.
+
+`vim.treesitter.start` is called under `pcall`: a filetype with no parser is
+the normal case, not an error, and just keeps Neovim's regex highlighting.
+zsh has no grammar of its own, so the bash one is registered for it —
+otherwise `.zshrc`, the largest file in this repo, would be the one thing not
+highlighted.
 
 ### Telescope
 
