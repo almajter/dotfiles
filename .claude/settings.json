@@ -1,7 +1,34 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Read"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(gh pr review:*)",
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(git init:*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+      "Bash(git clone:*)",
+      "Read(.env*)",
+      "Edit(.env*)",
+      "Read(~/.ssh/**)",
+      "Edit(~/.ssh/**)"
+    ]
+  },
   "model": "opus",
-  "fallbackModel": ["sonnet"],
+  "fallbackModel": [
+    "sonnet"
+  ],
   "skillOverrides": {
     "peon-ping-config": "off",
     "peon-ping-log": "off",
@@ -146,7 +173,6 @@
     "context7@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
   "effortLevel": "medium",
