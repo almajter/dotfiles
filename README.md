@@ -118,6 +118,12 @@ built-in `default` scheme is maintained upstream; `desert` is not.
 Swapfiles and backups are off, as in `.vimrc`, but `undofile` is **on** —
 undo history persists to disk, which is what the swapfiles were half doing.
 
+## Plugins
+
+| Plugin | What it does |
+|---|---|
+| `vim-tmux-navigator` | the nvim half of `Ctrl+h/j/k/l` split ↔ pane navigation |
+
 ## Plugin management
 
 [lazy.nvim](https://github.com/folke/lazy.nvim), bootstrapped in
@@ -146,18 +152,17 @@ annoyance.
 | Key | Action |
 |---|---|
 | `<Esc>` | clear search highlight |
-| `Ctrl+h/j/k/l` | move between splits (see caveat below) |
+| `Ctrl+h/j/k/l` | move between nvim splits, crossing into tmux panes at the edge |
+| `Ctrl+\` | jump to the previously active split/pane |
 | `Ctrl+d` / `Ctrl+u` | half page down/up, cursor re-centred |
 | `J` / `K` *(visual)* | move the selection down/up and reindent |
 | `<` / `>` *(visual)* | indent, keeping the selection |
 | `<leader>q` | diagnostics to location list |
 
-**Caveat on `Ctrl+h/j/k/l`:** tmux's `vim-tmux-navigator` forwards these into
-nvim (see the tmux section below), and the mappings here move between *nvim*
-splits — but the handoff is one-way. At the edge of nvim's split layout the
-keystroke stops there instead of continuing on to the next tmux pane, because
-the nvim half of `vim-tmux-navigator` isn't installed. Seamless crossing needs
-that plugin on both sides.
+`Ctrl+h/j/k/l` are not defined in `keymaps.lua` — they come from
+`vim-tmux-navigator` (see [Plugins](#plugins-1) above), which is what makes
+them continue into the neighbouring tmux pane once you run out of nvim splits
+to move through.
 
 ## Git diffs in nvim
 
@@ -193,8 +198,10 @@ running `vim`/`nvim`, the keystroke passes through to vim's own split
 navigation instead of moving tmux panes. Handled by the `vim-tmux-navigator`
 plugin (see Plugins below) — no hand-rolled `is_vim` shell detection.
 
-The nvim side of that handoff is only half-wired — see the
-[Neovim keymaps caveat](#keymaps).
+The plugin is installed on **both** sides — tmux via TPM, nvim via lazy.nvim
+(see [Neovim plugins](#plugins-1)). Both halves are required: the tmux side
+alone gets the keystroke into nvim, but crossing back out at the edge of an
+nvim split layout needs the nvim side too.
 
 **Consequence:** `Ctrl+h/j/k/l` never reach the shell anymore (tmux
 intercepts them first) — that's why `clear-screen` and `kill-line` had to
