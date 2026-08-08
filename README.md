@@ -135,10 +135,11 @@ undo history persists to disk, which is what the swapfiles were half doing.
 | `telescope-fzf-native.nvim` | native C sorter for telescope; compiled at install |
 | `plenary.nvim` | telescope's dependency, not used directly |
 | `nvim-treesitter` | parser-based syntax highlighting and indentation |
+| `vim-fugitive` | git status/stage/diff/blame/log from inside nvim |
 
-Telescope and vim-tmux-navigator load on their keys. `nvim-treesitter` is
-`lazy = false` — highlighting has to attach to the first buffer read, so
-deferring it defeats the point.
+Telescope, vim-tmux-navigator and vim-fugitive load on their keys/commands.
+`nvim-treesitter` is `lazy = false` — highlighting has to attach to the first
+buffer read, so deferring it defeats the point.
 
 ### Treesitter
 
@@ -181,6 +182,21 @@ highlighted.
 
 `<Esc>` closes a picker directly from insert mode rather than first dropping
 into telescope's own normal mode.
+
+### Fugitive
+
+| Key | Action |
+|---|---|
+| `<leader>gs` | `:Git` status window — stage/unstage a file with `-`, inline diff with `dv` |
+| `<leader>gd` | `:Gdiffsplit` — hunk-level diff against the index; stage a hunk with `do`/`dp` |
+| `<leader>gb` | `:Git blame` |
+| `<leader>gl` | `:Gclog` — log into the quickfix list |
+| `<leader>gp` | `:Git push` |
+
+Staged hunks: open with `<leader>gs`, put the cursor on a file and press `=`
+to expand its inline diff, then `-` on a `+`/`-` line to stage or unstage just
+that hunk. `<leader>gd` gives the same staging via a full diff split instead
+of the inline view.
 
 `find_files` passes `--hidden` to ripgrep, since dotfiles are the whole point
 of this repo and would otherwise be invisible. `.gitignore` is still respected,
