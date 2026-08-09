@@ -379,7 +379,8 @@ ones with `prefix + alt+u`.
 
 | Key | Action |
 |---|---|
-| `Ctrl+b` / `Ctrl+f` | move back / forward one character (or arrow keys) |
+| `Ctrl+b` | move back one character (or Left arrow) |
+| `Ctrl+f` | accept the current zsh-autosuggestion; moves forward one character if no suggestion is showing (or Right arrow) |
 | `Alt+b` / `Alt+f` *(right Option)* | move back / forward one **word** |
 | `Ctrl+a` / `Ctrl+e` | jump to start / end of line |
 | `Ctrl+w` | delete one word **backward** |
@@ -391,6 +392,13 @@ ones with `prefix + alt+u`.
 | `Ctrl+r` | fuzzy-search command history (fzf, see below) |
 | `Ctrl+t` | fuzzy-find a file, insert its path at cursor (fzf) |
 | `Alt+c` *(right Option)* | fuzzy-find a directory and `cd` into it (fzf) |
+
+`Ctrl+f` was repointed from plain `forward-char` to
+`zsh-autosuggestions`' accept-suggestion widget — `Ctrl+Space` was the
+original choice but macOS intercepts it globally for input-source switching
+(System Settings → Keyboard → Keyboard Shortcuts → Input Sources) before it
+ever reaches the terminal. When no suggestion is showing, `Ctrl+f` falls
+back to its original `forward-char` behavior automatically.
 
 All three moves fall out of tmux owning `Ctrl+h/j/k/l`, so none of them reach
 zsh: `clear-screen` and `kill-line` moved to keys tmux doesn't capture (`Alt+k`
