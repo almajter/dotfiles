@@ -1,5 +1,5 @@
 # >>> Alias for config files >>>
-alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
+alias config='git --git-dir=$HOME/dotfiles.git --work-tree=$HOME'
 # <<< Alias for config files <<<
 
 # >>> .local/bin >>>
@@ -89,6 +89,15 @@ export PATH=$PATH:$HOME/go/bin
 # Ctrl-R fuzzy history search, Ctrl-T fuzzy file find, Alt-C fuzzy cd
 eval "$(fzf --zsh)"
 # <<< fzf shell integration <<<
+
+# >>> zoxide (smarter cd) >>>
+# `z <query>` jumps to the best frecency match; `zi <query>` opens an
+# interactive fuzzy picker. `cd` itself is left untouched.
+# zinit's own `zi` alias (bootstrap above) shadows zoxide's `zi` function --
+# aliases win over same-named functions at parse time in zsh -- so drop it.
+unalias zi 2>/dev/null
+eval "$(zoxide init zsh)"
+# <<< zoxide (smarter cd) <<<
 
 # >>> tmux aliases >>>
 alias tl='tmux list-sessions'
