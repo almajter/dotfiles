@@ -51,8 +51,9 @@ zinit wait lucid for \
   atinit"zicompinit; zicdreplay; compdef _tmux_sessions to tks" \
     zsh-users/zsh-syntax-highlighting
 
-# Ctrl+Space accepts the current autosuggestion
-bindkey '^ ' autosuggest-accept
+# Ctrl+f accepts the current autosuggestion (Ctrl+Space is eaten by macOS
+# input-source switching before it reaches the terminal)
+bindkey '^f' autosuggest-accept
 
 # >>> nvm lazy initialize >>>
 export NVM_DIR="$HOME/.nvm"
