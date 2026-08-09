@@ -1,5 +1,5 @@
 # >>> Alias for config files >>>
-alias config='git --git-dir=/Users/majal/dotfiles.git --work-tree=/Users/majal'
+alias config='git --git-dir=$HOME/dotfiles.git --work-tree=$HOME'
 # <<< Alias for config files <<<
 
 # >>> .local/bin >>>
@@ -97,7 +97,7 @@ eval "$(fzf --zsh)"
 # aliases win over same-named functions at parse time in zsh -- so drop it.
 unalias zi 2>/dev/null
 eval "$(zoxide init zsh)"
-# <<< zoxide (smarter cd) >>>
+# <<< zoxide (smarter cd) <<<
 
 # >>> tmux aliases >>>
 alias tl='tmux list-sessions'
