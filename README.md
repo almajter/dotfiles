@@ -64,8 +64,8 @@ Setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghost
    config checkout local
    ```
 
-External dependencies these configs expect: `fzf`, `nvm`, `pyenv`, `nvim`
-(0.9+, required by lazy.nvim), `ripgrep` (telescope),
+External dependencies these configs expect: `fzf`, `zoxide`, `nvm`, `pyenv`,
+`nvim` (0.9+, required by lazy.nvim), `ripgrep` (telescope),
 `tree-sitter-cli` (nvim-treesitter — note it is a *separate* Homebrew formula
 from `tree-sitter`), `tmux` with
 [TPM](https://github.com/tmux-plugins/tpm), and (for the Claude Code hooks)
@@ -451,6 +451,26 @@ work here.
 
 `eval "$(fzf --zsh)"` in [`.zshrc`](.zshrc) wires up `Ctrl+r` / `Ctrl+t` /
 `Alt+c` above. `Alt+c` needs the **right** Option key (see Alacritty section).
+
+## zoxide (directory jumping)
+
+`eval "$(zoxide init zsh)"` in [`.zshrc`](.zshrc) adds frecency-based `cd`.
+
+| Command | Action |
+|---|---|
+| `z <query>` | jump straight to the highest-frecency directory matching `<query>` |
+| `zi <query>` | interactive fuzzy picker over frecency matches |
+
+`cd` itself is untouched — zoxide only learns from directories you `cd`
+into, it doesn't intercept `cd`. Different tool from fzf's `Alt+c` above:
+`Alt+c` browses *all* directories under the cwd, `z`/`zi` jump to
+directories you've actually visited before, ranked by frequency + recency.
+
+zinit's own `zi` alias (from the bootstrap block) is unaliased in
+`.zshrc` so zoxide's `zi` function can take over — aliases shadow
+same-named functions in zsh regardless of definition order. The full
+`zinit` command (`zinit update`, `zinit self-update`, ...) still works
+unabbreviated.
 
 ## Reloading after config changes
 
