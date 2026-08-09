@@ -90,6 +90,15 @@ export PATH=$PATH:$HOME/go/bin
 eval "$(fzf --zsh)"
 # <<< fzf shell integration <<<
 
+# >>> zoxide (smarter cd) >>>
+# `z <query>` jumps to the best frecency match; `zi <query>` opens an
+# interactive fuzzy picker. `cd` itself is left untouched.
+# zinit's own `zi` alias (bootstrap above) shadows zoxide's `zi` function --
+# aliases win over same-named functions at parse time in zsh -- so drop it.
+unalias zi 2>/dev/null
+eval "$(zoxide init zsh)"
+# <<< zoxide (smarter cd) >>>
+
 # >>> tmux aliases >>>
 alias tl='tmux list-sessions'
 
