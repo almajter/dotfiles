@@ -238,20 +238,30 @@ fi
 # Git 分支與髒標記（帶快取）
 # ═══════════════════════════════════════════════════════════════
 
-GIT_CACHE="/tmp/claude-statusline-git-cache"
 GIT_CACHE_MAX_AGE=5
 
 git_branch="${branch:-}"
 dirty=""
 
+# 每個目錄一個快取檔，放在使用者專屬的 $TMPDIR 底下。
+# 先前是單一共用路徑：最後更新的 session 會把自己的分支與髒標記發佈給所有
+# 其他 session，乾淨的 repo 因此顯示成髒的。$TMPDIR 同時避免共用 /tmp 上
+# 可預測檔名被搶先建立成 symlink。
+git_cache_path() {
+  local dir="${TMPDIR:-/tmp}"
+  printf '%s/claude-statusline-git-%s' \
+    "${dir%/}" "$(printf '%s' "$1" | cksum | cut -d' ' -f1)"
+}
+
 git_cache_is_stale() {
-  [[ ! -f "$GIT_CACHE" ]] && return 0
-  local cache_age=$(( $(date +%s) - $(stat -f %m "$GIT_CACHE" 2>/dev/null || echo 0) ))
+  [[ ! -f "$1" ]] && return 0
+  local cache_age=$(( $(date +%s) - $(stat -f %m "$1" 2>/dev/null || echo 0) ))
   (( cache_age > GIT_CACHE_MAX_AGE ))
 }
 
 if [[ -n "${cwd_full:-}" && -d "${cwd_full:-}" ]]; then
-  if git_cache_is_stale; then
+  GIT_CACHE=$(git_cache_path "$cwd_full")
+  if git_cache_is_stale "$GIT_CACHE"; then
     if git -C "$cwd_full" rev-parse --git-dir &>/dev/null; then
       cached_branch="${git_branch}"
       if [[ -z "$cached_branch" ]]; then
