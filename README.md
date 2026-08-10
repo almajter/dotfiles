@@ -97,8 +97,8 @@ Emacs-mode line editing. Every `Alt+…` binding needs the **right** Option key
 |---|---|
 | `Ctrl+a` / `Ctrl+e` | start / end of line |
 | `Ctrl+b` / `Alt+b` | back one character / word |
-| `Ctrl+f` | **accept autosuggestion**, else forward one character |
-| `Alt+f` | forward one word |
+| `Ctrl+f` | forward one character |
+| `Alt+f` | **accept autosuggestion** |
 | `Ctrl+w` / `Alt+d` | delete word backward / forward |
 | `Alt+k` | kill to end of line — moved off `Ctrl+k` |
 | `Ctrl+u` | kill to start of line |
@@ -239,8 +239,10 @@ Things that cost real time to work out. Reasons, not restatements of the config.
   Backspace is unaffected; it has its own `^?` binding.
 - **Use the right Option key for every `Alt+…` binding.** `option_as_alt =
   "OnlyRight"` leaves left Option on macOS composition (`Option+N` → `~`).
-- **`Ctrl+f` accepts autosuggestions** because macOS swallows `Ctrl+Space`
-  globally for input-source switching before the terminal ever sees it.
+- **`Alt+f` accepts autosuggestions** (instead of its usual forward-word,
+  which isn't needed here) because macOS swallows `Ctrl+Space` globally for
+  input-source switching before the terminal ever sees it. `Ctrl+f` stays
+  forward-char.
 - **Don't try to dim inactive panes.** Tried twice, doesn't work: tmux only
   restyles cells the application left at default colors, and the prompt, syntax
   highlighting and any colorscheme'd TUI all paint their own. Border color and
