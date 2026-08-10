@@ -242,7 +242,8 @@ Things that cost real time to work out. Reasons, not restatements of the config.
 - **`Alt+f` accepts autosuggestions** (instead of its usual forward-word,
   which isn't needed here) because macOS swallows `Ctrl+Space` globally for
   input-source switching before the terminal ever sees it. `Ctrl+f` stays
-  forward-char.
+  forward-char. Needs the **right** Option key, like every other `Alt+…`
+  binding.
 - **Don't try to dim inactive panes.** Tried twice, doesn't work: tmux only
   restyles cells the application left at default colors, and the prompt, syntax
   highlighting and any colorscheme'd TUI all paint their own. Border color and
