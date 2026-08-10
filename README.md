@@ -63,6 +63,7 @@ Prefix is `Ctrl+a`. Press it **twice** to send a literal `Ctrl+a` to the shell.
 | `Ctrl+h/j/k/l` | move between panes — **no prefix**, vim-aware ([why](#gotchas)) |
 | `prefix h/j/k/l` | same, prefix'd, kept for muscle memory |
 | `Alt+h/j/k/l` | resize active pane by 2 cells — **no prefix**, needs the right Option key |
+| `prefix Space` | cycle pane layout (e.g. side-by-side ↔ stacked) |
 
 Mouse mode is on: scroll, click-to-focus, drag borders to resize. Dragging a
 selection copies to the macOS clipboard; in copy mode `v` selects and `y` copies.
