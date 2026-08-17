@@ -1,8 +1,7 @@
 # dotfiles
 
 My macOS terminal setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix
-`Ctrl+a`) + Alacritty/Ghostty, with a Neovim config built from scratch rather
-than forked from a distribution.
+`Ctrl+a`) + Alacritty/Ghostty, with a Neovim config built from scratch.
 
 Tracked in a **bare** repo at `$HOME/dotfiles.git` with `$HOME` as the work
 tree. Nothing is symlinked — the files are checked out where they belong.
