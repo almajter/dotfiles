@@ -99,9 +99,9 @@ bindings documented below silently do nothing:
 | `Alt+s` | tmux session tree |
 
 Workspaces B/C/D/F/P/S still exist (persistent) and `Alt+Shift+<letter>` can
-still move windows to them. Two conflicts are accepted as-is: `Alt+k` stays
-AeroSpace's `focus up` (zsh kill-line lives on `Ctrl+Alt+k`), and tmux's
-`Alt+h/j/k/l` pane-resize is shadowed — drag pane borders instead.
+still move windows to them. Where both sides wanted a key, the loser moved to
+`Ctrl+Alt`, which nothing intercepts: zsh kill-line is `Ctrl+Alt+k` (AeroSpace
+keeps `Alt+k` for `focus up`) and tmux pane-resize is `Ctrl+Alt+h/j/k/l`.
 
 ## tmux
 
@@ -117,7 +117,7 @@ Prefix is `Ctrl+a`. Press it **twice** to send a literal `Ctrl+a` to the shell.
 | `prefix I` | install/update TPM plugins (`prefix alt+u` removes unused) |
 | `Ctrl+h/j/k/l` | move between panes — **no prefix**, vim-aware ([why](#gotchas)) |
 | `prefix h/j/k/l` | same, prefix'd, kept for muscle memory |
-| `Alt+h/j/k/l` | resize active pane by 2 cells — **shadowed by AeroSpace focus**; drag borders instead |
+| `Ctrl+Alt+h/j/k/l` | resize active pane by 2 cells — **no prefix**; moved off plain Alt, which AeroSpace owns |
 | `prefix Space` | cycle pane layout (e.g. side-by-side ↔ stacked) |
 
 Mouse mode is on: scroll, click-to-focus, drag borders to resize. Dragging a
