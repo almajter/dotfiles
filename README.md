@@ -1,7 +1,8 @@
 # dotfiles
 
-My macOS terminal setup: zsh (oh-my-zsh libs via zinit) + tmux (prefix
-`Ctrl+a`) + Alacritty/Ghostty, with a Neovim config built from scratch.
+My macOS terminal setup: AeroSpace (tiling WM) + zsh (oh-my-zsh libs via
+zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghostty, with a Neovim config
+built from scratch.
 
 Tracked in a **bare** repo at `$HOME/dotfiles.git` with `$HOME` as the work
 tree. Nothing is symlinked — the files are checked out where they belong.
@@ -21,7 +22,8 @@ config checkout local
 The alias is already in the tracked `.zshrc`, so it persists once the checkout
 lands. Use `config` exactly as you would `git`.
 
-**Dependencies:** `fzf`, `zoxide`, `nvm`, `pyenv`, `ripgrep`, `tree-sitter-cli`,
+**Dependencies:** AeroSpace (`brew install --cask nikitabobko/tap/aerospace`),
+`fzf`, `zoxide`, `nvm`, `pyenv`, `ripgrep`, `tree-sitter-cli`,
 `nvim` (0.9+, required by lazy.nvim), `tmux` +
 [TPM](https://github.com/tmux-plugins/tpm), and `rtk` + `peon-ping` for the
 Claude Code hooks.
@@ -37,6 +39,7 @@ Claude Code hooks.
 | [`.gitconfig`](.gitconfig) + [`.config/git/ignore`](.config/git/ignore) | git identity, difftool, global ignore (`.DS_Store`, `settings.local.json`) | immediate |
 | [`.config/alacritty/`](.config/alacritty/alacritty.toml) | terminal | quit and relaunch |
 | [`.config/ghostty/`](.config/ghostty/config) | terminal | `Cmd+Shift+,` |
+| `.config/aerospace/` | tiling window manager | automatic on save (`auto-reload-config`) |
 | [`.claude/`](.claude/settings.json) | Claude Code settings, instructions, statusline | immediate |
 
 New `@plugin` lines in `.tmux.conf` also need `prefix + I`. Neovim plugin spec
@@ -46,6 +49,59 @@ changes also need `:Lazy sync`.
 name — transcripts, caches and brew-managed hooks stay local. **Adding a skill
 or agent there means editing that whitelist too, or it silently stays
 untracked.**
+
+## AeroSpace
+
+Tiling window manager. Windows tile automatically — a workspace is a tree of
+splits: containers split horizontally or vertically, windows are the leaves.
+`join-with` adds nesting, `flatten-workspace-tree` removes it.
+
+Workspaces are AeroSpace's own (macOS Spaces are untouched), created on demand
+and destroyed when empty — except the `persistent-workspaces` list, which
+keeps 1–9 and most letters alive.
+
+| Key | Action |
+|---|---|
+| `Alt+h/j/k/l` | focus window left / down / up / right |
+| `Alt+Shift+h/j/k/l` | move the focused window |
+| `Alt+-` / `Alt+=` | shrink / grow by 50px (smart: axis follows the split) |
+| `Alt+/` | tiles layout — again to flip horizontal ↔ vertical |
+| `Alt+,` | accordion layout — same flip on repeat |
+| `Alt+1…9` / `Alt+<letter>` | switch workspace |
+| `Alt+Shift+<same>` | move window to that workspace |
+| `Alt+Tab` | previous workspace (back-and-forth) |
+| `Alt+Shift+Tab` | move current workspace to the next monitor |
+
+### Service mode
+
+`Alt+Shift+;` enters it; every action drops back to main mode.
+
+| Key | Action |
+|---|---|
+| `f` | toggle floating ↔ tiled for the focused window |
+| `r` | flatten the workspace tree — the "fix my layout" reset |
+| `Backspace` | close every window on the workspace except the current one |
+| `Alt+Shift+h/j/k/l` | join-with: nest the window into a container with its neighbor |
+| `Esc` | reload config |
+
+### Keys ceded to the terminal
+
+AeroSpace intercepts Option chords before any app sees them, so these
+workspace bindings are removed on purpose — with them present, the zsh/tmux
+bindings documented below silently do nothing:
+
+| Key | Goes to |
+|---|---|
+| `Alt+b` / `Alt+d` | zsh word motions |
+| `Alt+c` | fzf fuzzy-cd |
+| `Alt+f` | zsh autosuggestion accept |
+| `Alt+p` | zsh history-prefix search |
+| `Alt+s` | tmux session tree |
+
+Workspaces B/C/D/F/P/S still exist (persistent) and `Alt+Shift+<letter>` can
+still move windows to them. Two conflicts are accepted as-is: `Alt+k` stays
+AeroSpace's `focus up` (zsh kill-line lives on `Ctrl+Alt+k`), and tmux's
+`Alt+h/j/k/l` pane-resize is shadowed — drag pane borders instead.
 
 ## tmux
 
@@ -61,7 +117,7 @@ Prefix is `Ctrl+a`. Press it **twice** to send a literal `Ctrl+a` to the shell.
 | `prefix I` | install/update TPM plugins (`prefix alt+u` removes unused) |
 | `Ctrl+h/j/k/l` | move between panes — **no prefix**, vim-aware ([why](#gotchas)) |
 | `prefix h/j/k/l` | same, prefix'd, kept for muscle memory |
-| `Alt+h/j/k/l` | resize active pane by 2 cells — **no prefix**, needs the right Option key |
+| `Alt+h/j/k/l` | resize active pane by 2 cells — **shadowed by AeroSpace focus**; drag borders instead |
 | `prefix Space` | cycle pane layout (e.g. side-by-side ↔ stacked) |
 
 Mouse mode is on: scroll, click-to-focus, drag borders to resize. Dragging a
@@ -102,7 +158,7 @@ Emacs-mode line editing. Every `Alt+…` binding needs the **right** Option key
 | `Ctrl+f` | forward one character |
 | `Alt+f` | **accept autosuggestion** |
 | `Ctrl+w` / `Alt+d` | delete word backward / forward |
-| `Alt+k` | kill to end of line — moved off `Ctrl+k` |
+| `Ctrl+Alt+k` | kill to end of line — moved off `Ctrl+k`, then off `Alt+k` ([why](#gotchas)) |
 | `Ctrl+u` | kill to start of line |
 | `Ctrl+y` | yank last killed text |
 | `Ctrl+g` | clear screen — moved off `Ctrl+l` |
@@ -235,10 +291,15 @@ Things that cost real time to work out. Reasons, not restatements of the config.
   installed on **both** sides — TPM for tmux, lazy.nvim for Neovim. The tmux
   half alone gets the key into nvim but can't get you back out.
 - **Consequence:** those keys never reach zsh. `clear-screen` moved to `Ctrl+g`
-  and `kill-line` to `Alt+k` (`ESC k` is a different byte sequence, so tmux
-  doesn't eat it), and `^H` is unbound outright — OMZ mapped it to backspace via
-  the `kbs` terminfo capability, which is `^H` under `tmux-256color`. Physical
-  Backspace is unaffected; it has its own `^?` binding.
+  and `kill-line` first to `Alt+k` (`ESC k` is a different byte sequence, so
+  tmux doesn't eat it), then to `Ctrl+Alt+k` once AeroSpace claimed plain
+  `Alt+k` for `focus up`. `^H` is unbound outright — OMZ mapped it to backspace
+  via the `kbs` terminfo capability, which is `^H` under `tmux-256color`.
+  Physical Backspace is unaffected; it has its own `^?` binding.
+- **AeroSpace owns Option chords globally** — both Option keys, ahead of the
+  terminal. A zsh/tmux `Alt+…` binding only works if that key is absent from
+  `aerospace.toml` ("Keys ceded to the terminal" above) — and then Alacritty's
+  OnlyRight rule still applies on top.
 - **Use the right Option key for every `Alt+…` binding.** `option_as_alt =
   "OnlyRight"` leaves left Option on macOS composition (`Option+N` → `~`).
 - **`Alt+f` accepts autosuggestions** (instead of its usual forward-word,
