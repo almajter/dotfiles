@@ -65,7 +65,8 @@ Prefix is `Ctrl+a`. Press it **twice** to send a literal `Ctrl+a` to the shell.
 | `prefix Space` | cycle pane layout (e.g. side-by-side ↔ stacked) |
 
 Mouse mode is on: scroll, click-to-focus, drag borders to resize. Dragging a
-selection copies to the macOS clipboard; in copy mode `v` selects and `y` copies.
+selection copies to the macOS clipboard; in copy mode `v` selects, `C-v` toggles
+rectangle selection, and `y` copies.
 
 ### Sessions
 
