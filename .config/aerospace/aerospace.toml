@@ -144,7 +144,7 @@ gaps.outer.right =      0
     # alt-c freed up for fzf's fuzzy-cd widget in the terminal
     # alt-d freed up for delete-word-forward in the terminal
     alt-e = 'workspace E'
-    # alt-f freed up for accepting autosuggestions in the terminal
+    # alt-f freed up for forward-word in the terminal
     alt-g = 'workspace G'
     alt-i = 'workspace I'
     alt-m = 'workspace M'
