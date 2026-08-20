@@ -92,9 +92,8 @@ bindings documented below silently do nothing:
 
 | Key | Goes to |
 |---|---|
-| `Alt+b` / `Alt+d` | zsh word motions |
+| `Alt+b` / `Alt+f` / `Alt+d` | zsh word motions |
 | `Alt+c` | fzf fuzzy-cd |
-| `Alt+f` | zsh autosuggestion accept |
 | `Alt+p` | zsh history-prefix search |
 | `Alt+s` | tmux session tree |
 
@@ -155,8 +154,8 @@ Emacs-mode line editing. Every `Alt+…` binding needs the **right** Option key
 |---|---|
 | `Ctrl+a` / `Ctrl+e` | start / end of line |
 | `Ctrl+b` / `Alt+b` | back one character / word |
-| `Ctrl+f` | forward one character |
-| `Alt+f` | **accept autosuggestion** |
+| `Ctrl+f` | forward one char — **accepts the autosuggestion** when one is showing |
+| `Alt+f` | forward one word |
 | `Ctrl+w` / `Alt+d` | delete word backward / forward |
 | `Ctrl+Alt+k` | kill to end of line — moved off `Ctrl+k`, then off `Alt+k` ([why](#gotchas)) |
 | `Ctrl+u` | kill to start of line |
@@ -302,11 +301,11 @@ Things that cost real time to work out. Reasons, not restatements of the config.
   OnlyRight rule still applies on top.
 - **Use the right Option key for every `Alt+…` binding.** `option_as_alt =
   "OnlyRight"` leaves left Option on macOS composition (`Option+N` → `~`).
-- **`Alt+f` accepts autosuggestions** (instead of its usual forward-word,
-  which isn't needed here) because macOS swallows `Ctrl+Space` globally for
-  input-source switching before the terminal ever sees it. `Ctrl+f` stays
-  forward-char. Needs the **right** Option key, like every other `Alt+…`
-  binding.
+- **`Ctrl+f` accepts autosuggestions** with no extra binding — `forward-char`
+  is in zsh-autosuggestions' default `ACCEPT_WIDGETS`, so it accepts when a
+  suggestion is showing and moves forward a character otherwise. The usual
+  `Ctrl+Space` can't work: macOS swallows it globally for input-source
+  switching before the terminal ever sees it.
 - **Don't try to dim inactive panes.** Tried twice, doesn't work: tmux only
   restyles cells the application left at default colors, and the prompt, syntax
   highlighting and any colorscheme'd TUI all paint their own. Border color and
