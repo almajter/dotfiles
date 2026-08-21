@@ -94,10 +94,11 @@ bindings documented below silently do nothing:
 |---|---|
 | `Alt+b` / `Alt+f` / `Alt+d` | zsh word motions |
 | `Alt+c` | fzf fuzzy-cd |
+| `Alt+n` | macOS tilde composition (left `Option+N` → `~`) |
 | `Alt+p` | zsh history-prefix search |
 | `Alt+s` | tmux session tree |
 
-Workspaces B/C/D/F/P/S still exist (persistent) and `Alt+Shift+<letter>` can
+Workspaces B/C/D/F/N/P/S still exist (persistent) and `Alt+Shift+<letter>` can
 still move windows to them. Where both sides wanted a key, the loser moved to
 `Ctrl+Alt`, which nothing intercepts: zsh kill-line is `Ctrl+Alt+k` (AeroSpace
 keeps `Alt+k` for `focus up`) and tmux pane-resize is `Ctrl+Alt+h/j/k/l`.
