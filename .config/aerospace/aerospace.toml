@@ -148,7 +148,7 @@ gaps.outer.right =      0
     alt-g = 'workspace G'
     alt-i = 'workspace I'
     alt-m = 'workspace M'
-    alt-n = 'workspace N'
+    # alt-n freed up so left Option+N composes tilde (~)
     alt-o = 'workspace O'
     # alt-p freed up for history-prefix-search in the terminal
     alt-q = 'workspace Q'
