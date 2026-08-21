@@ -39,7 +39,7 @@ Claude Code hooks.
 | [`.gitconfig`](.gitconfig) + [`.config/git/ignore`](.config/git/ignore) | git identity, difftool, global ignore (`.DS_Store`, `settings.local.json`) | immediate |
 | [`.config/alacritty/`](.config/alacritty/alacritty.toml) | terminal | quit and relaunch |
 | [`.config/ghostty/`](.config/ghostty/config) | terminal | `Cmd+Shift+,` |
-| `.config/aerospace/` | tiling window manager | automatic on save (`auto-reload-config`) |
+| [`.config/aerospace/`](.config/aerospace/aerospace.toml) | tiling window manager | automatic on save (`auto-reload-config`) |
 | [`.claude/`](.claude/settings.json) | Claude Code settings, instructions, statusline | immediate |
 
 New `@plugin` lines in `.tmux.conf` also need `prefix + I`. Neovim plugin spec
