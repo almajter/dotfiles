@@ -21,6 +21,12 @@ which rtk             # Verify correct binary
 
 ⚠️ **Name collision**: If `rtk gain` fails, you may have reachingforthejack/rtk (Rust Type Kit) installed instead.
 
+## Truncated output
+
+When rtk truncates long output, the full text is tee'd to
+`~/Library/Application Support/rtk/tee/*.log` — read the newest matching log
+instead of re-running the command.
+
 ## Hook-Based Usage
 
 All other commands are automatically rewritten by the Claude Code hook.
