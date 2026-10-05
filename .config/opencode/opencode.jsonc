@@ -1,0 +1,39 @@
+{
+  // OpenCode V2 global configuration.
+  // Docs: https://opencode.ai/v2/docs/config
+  "$schema": "https://opencode.ai/config.json",
+
+  // Default model (provider/model). Switch per session with /models or F2.
+  // Alternatives: deepseek/deepseek-v4-pro (stronger), deepseek/deepseek-flash (faster).
+  "model": "deepseek/deepseek-flash",
+
+  // Migrated from Claude Code ~/.claude/settings.json.
+  // Rules are ordered and the LAST matching rule wins, so broad rules come first.
+  "permissions": [
+    { "action": "shell", "resource": "*", "effect": "allow" },
+
+    // Denied shell commands (mirrors Claude Code Bash(...) deny list).
+    { "action": "shell", "resource": "sudo *", "effect": "deny" },
+    { "action": "shell", "resource": "gh pr review *", "effect": "deny" },
+    { "action": "shell", "resource": "rm -rf *", "effect": "deny" },
+    { "action": "shell", "resource": "rm -fr *", "effect": "deny" },
+    { "action": "shell", "resource": "git init *", "effect": "deny" },
+    { "action": "shell", "resource": "git reset *", "effect": "deny" },
+    { "action": "shell", "resource": "git rebase *", "effect": "deny" },
+    { "action": "shell", "resource": "git clone *", "effect": "deny" },
+
+    // Ask before remote access. rtk rewrites `ssh` to `rtk ssh`, so cover both.
+    { "action": "shell", "resource": "ssh *", "effect": "ask" },
+    { "action": "shell", "resource": "rtk ssh *", "effect": "ask" },
+
+    // Protect secret files (mirrors Claude Code Read/Edit(.env*) deny list).
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*.env.example", "effect": "allow" },
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": "*.env.*", "effect": "deny" },
+    { "action": "edit", "resource": "*.env.example", "effect": "allow" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "~/.ssh/**", "effect": "deny" },
+    { "action": "edit", "resource": "~/.ssh/**", "effect": "deny" }
+  ]
+}

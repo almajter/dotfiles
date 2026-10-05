@@ -1,0 +1,14 @@
+# ~/.config/opencode accumulates runtime state (service.json holds a pairing
+# password; peon-ping/config.json is synced from peon). Ignore everything and
+# opt tracked files back in by name.
+*
+
+!.gitignore
+!opencode.jsonc
+!AGENTS.md
+
+# Authored plugin only. The vendored peon-ping.ts is intentionally NOT tracked;
+# reinstall it with: bash ~/.claude/hooks/peon-ping/adapters/opencode.sh
+!plugins/
+plugins/*
+!plugins/rtk.ts
