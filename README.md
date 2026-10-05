@@ -26,7 +26,7 @@ lands. Use `config` exactly as you would `git`.
 `fzf`, `zoxide`, `nvm`, `pyenv`, `ripgrep`, `tree-sitter-cli`,
 `nvim` (0.9+, required by lazy.nvim), `tmux` +
 [TPM](https://github.com/tmux-plugins/tpm), and `rtk` + `peon-ping` for the
-Claude Code hooks.
+Claude Code and OpenCode hooks.
 
 ## What's tracked
 
@@ -41,6 +41,7 @@ Claude Code hooks.
 | [`.config/ghostty/`](.config/ghostty/config) | terminal | `Cmd+Shift+,` |
 | [`.config/aerospace/`](.config/aerospace/aerospace.toml) | tiling window manager | automatic on save (`auto-reload-config`) |
 | [`.claude/`](.claude/settings.json) | Claude Code settings, instructions, statusline | immediate |
+| [`.config/opencode/`](.config/opencode/opencode.jsonc) | OpenCode global config, instructions, rtk plugin | `opencode reload`; restart for plugins |
 
 New `@plugin` lines in `.tmux.conf` also need `prefix + I`. Neovim plugin spec
 changes also need `:Lazy sync`.
@@ -48,7 +49,9 @@ changes also need `:Lazy sync`.
 `.claude/.gitignore` ignores that directory wholesale and opts files back in by
 name — transcripts, caches and brew-managed hooks stay local. **Adding a skill
 or agent there means editing that whitelist too, or it silently stays
-untracked.**
+untracked.** `.config/opencode/.gitignore` uses the same ignore-all/opt-in
+pattern: `service.json` (holds a pairing password) and the vendored
+`peon-ping.ts` adapter stay out of the repo.
 
 ## AeroSpace
 
@@ -283,6 +286,35 @@ line.
 is kept purely as muscle memory. Gitsigns complements Fugitive rather than
 replacing it: gitsigns for glance-and-hunk work, Fugitive for the full status
 window and commit/push.
+
+## OpenCode
+
+Global config lives in `.config/opencode/`: `opencode.jsonc` (model and
+permissions), `AGENTS.md` (instructions loaded for every project), and
+`plugins/rtk.ts`.
+
+Default model is `deepseek/deepseek-flash`; switch per session with `/models` or
+`F2`. The permission rules mirror the old Claude Code `settings.json` — deny
+`sudo` / `rm -rf` / `git reset` / `git rebase` / `git init` / `git clone`, deny
+reads and edits of `.env*` and `~/.ssh/**`, and ask before `ssh`. Rules are
+ordered, last match wins.
+
+`plugins/rtk.ts` ports the Claude Code `rtk` hook to OpenCode: it rewrites shell
+commands through `rtk hook claude` before they run, so output is filtered the
+same way. rtk never rewrites a denied command (`git reset`, `rm -rf`, …), so the
+deny rules stay effective; it does rewrite `ssh` to `rtk ssh`, which is why both
+forms are in the ask list.
+
+`plugins/peon-ping.ts` is the upstream peon-ping **V2** adapter (the Homebrew
+copy is the old V1 API) and is **not tracked** — reinstall it with:
+
+```sh
+bash ~/.claude/hooks/peon-ping/adapters/opencode.sh
+```
+
+OpenCode also reads `~/.claude/skills/` directly, so existing skills need no
+copying. `AGENTS.md` replaces `~/.claude/CLAUDE.md`: global instructions now
+live there, because V2 ignores `CLAUDE.md`.
 
 ## Gotchas
 
