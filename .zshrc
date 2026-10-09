@@ -131,3 +131,11 @@ _tmux_sessions() {
 }
 # Registered by the deferred zicompinit hook above -- compdef doesn't exist yet.
 # <<< tmux aliases <<<
+
+# >>> Aliases >>>
+alias vi='nvim'
+alias vim='nvim'
+alias k='kubectl'
+export do="--dry-run=client -o yaml"
+export now="--force --grace-period=0"
+# <<< Aliases <<<
