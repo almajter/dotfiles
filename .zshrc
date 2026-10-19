@@ -163,6 +163,7 @@ alacritty() {
 # >>> Aliases >>>
 alias vi='nvim'
 alias vim='nvim'
+alias code='codium'
 alias k='kubectl'
 export do="--dry-run=client -o yaml"
 export now="--force --grace-period=0"
