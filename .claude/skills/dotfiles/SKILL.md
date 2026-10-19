@@ -1,6 +1,6 @@
 ---
 name: dotfiles
-description: Use when reading, editing, staging, or committing the user's config files under $HOME - .zshrc, .tmux.conf, .vimrc, .gitconfig, .config/nvim/**, .config/alacritty/alacritty.toml, .config/ghostty/config, or anything in ~/.claude. They live in a bare git repo driven by a `config` alias, so plain `git`, `git status`, and `.gitignore` assumptions all give wrong answers there. Use it before touching any of those paths, including when the user only asks to edit one - the edit is fine, but staging, committing, or reasoning about what's tracked will be wrong without this.
+description: Use when reading, editing, staging, or committing the user's config files under $HOME - .zshrc, .tmux.conf, .vimrc, .gitconfig, .config/nvim/**, .config/alacritty/alacritty.toml, or anything in ~/.claude. They live in a bare git repo driven by a `config` alias, so plain `git`, `git status`, and `.gitignore` assumptions all give wrong answers there. Use it before touching any of those paths, including when the user only asks to edit one - the edit is fine, but staging, committing, or reasoning about what's tracked will be wrong without this.
 user_invocable: true
 ---
 
@@ -40,8 +40,7 @@ shell is initialized from the user's profile. Use it exactly as you would `git`.
 ## What's tracked
 
 `.zshrc`, `.tmux.conf`, `.vimrc`, `.gitconfig`, `.config/git/ignore`,
-`.config/nvim/**`, `.config/alacritty/alacritty.toml`,
-`.config/ghostty/config`, and part of `.claude/`.
+`.config/nvim/**`, `.config/alacritty/alacritty.toml`, and part of `.claude/`.
 
 The nvim config is hand-built (not a kickstart/LazyVim fork) and includes
 `lazy-lock.json`, which is tracked deliberately so plugin versions are
