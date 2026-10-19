@@ -148,7 +148,7 @@ gaps.outer.right =      0
     alt-g = 'workspace G'
     alt-i = 'workspace I'
     alt-m = 'workspace M'
-    alt-n = 'workspace N'
+    # alt-n freed up so left Option+N composes tilde (~)
     alt-o = 'workspace O'
     # alt-p freed up for history-prefix-search in the terminal
     alt-q = 'workspace Q'
@@ -164,7 +164,7 @@ gaps.outer.right =      0
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
+    # alt-shift-2 freed up so Option+Shift+2 composes the at sign (@)
     alt-shift-3 = 'move-node-to-workspace 3'
     alt-shift-4 = 'move-node-to-workspace 4'
     alt-shift-5 = 'move-node-to-workspace 5'
