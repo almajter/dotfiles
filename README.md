@@ -42,6 +42,7 @@ lands. Use `config` exactly as you would `git`.
 | [`.config/nvim/`](.config/nvim/init.lua) | Neovim | restart; `require` caches Lua modules |
 | [`.gitconfig`](.gitconfig) + [`.config/git/ignore`](.config/git/ignore) | git identity, difftool, global ignore (`.DS_Store`, `settings.local.json`) | immediate |
 | [`.config/alacritty/`](.config/alacritty/alacritty.toml) | terminal | quit and relaunch |
+| [`Library/Application Support/VSCodium/User/settings.json`](Library/Application%20Support/VSCodium/User/settings.json) | VSCodium (`code` is aliased to `codium`); Monkey C is not on Open VSX, so install its `.vsix` from the VS Code Marketplace by hand | immediate |
 | [`.config/aerospace/`](.config/aerospace/aerospace.toml) | tiling window manager | automatic on save (`auto-reload-config`) |
 | [`.claude/`](.claude/settings.json) | Claude Code settings, instructions, statusline | immediate |
 | [`.config/opencode/`](.config/opencode/opencode.jsonc) | OpenCode global config, instructions, rtk plugin | `opencode reload`; restart for plugins |
