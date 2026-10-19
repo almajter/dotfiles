@@ -132,6 +132,34 @@ _tmux_sessions() {
 # Registered by the deferred zicompinit hook above -- compdef doesn't exist yet.
 # <<< tmux aliases <<<
 
+# >>> alacritty update >>>
+# Homebrew disabled the alacritty cask (not notarized), so `alacritty update`
+# (or `upgrade`) pulls the latest release DMG from GitHub instead. gh doesn't
+# set the quarantine flag, so Gatekeeper lets the ad-hoc signed app run.
+# Every other `alacritty ...` call goes to the app's own binary.
+alacritty() {
+  local app=/Applications/Alacritty.app
+  if [[ $1 != (update|upgrade) ]]; then
+    "$app/Contents/MacOS/alacritty" "$@"
+    return
+  fi
+
+  local tmp=$(mktemp -d)
+  gh release download -R alacritty/alacritty -p '*.dmg' -D "$tmp" || { rm -rf "$tmp"; return 1 }
+  local vol=$(hdiutil attach -nobrowse "$tmp"/*.dmg 2>/dev/null | awk -F'\t' '/\/Volumes\//{print $NF}')
+  rm -rf "$app" && ditto "$vol/Alacritty.app" "$app"
+  hdiutil detach -quiet "$vol"
+  rm -rf "$tmp"
+
+  # TERM=alacritty needs these terminfo entries (the cask used to link them).
+  mkdir -p ~/.terminfo/61
+  ln -sf "$app/Contents/Resources/61/alacritty" ~/.terminfo/61/alacritty
+  ln -sf "$app/Contents/Resources/61/alacritty-direct" ~/.terminfo/61/alacritty-direct
+
+  "$app/Contents/MacOS/alacritty" --version
+}
+# <<< alacritty update <<<
+
 # >>> Aliases >>>
 alias vi='nvim'
 alias vim='nvim'
