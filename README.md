@@ -1,7 +1,7 @@
 # dotfiles
 
 My macOS terminal setup: AeroSpace (tiling WM) + zsh (oh-my-zsh libs via
-zinit) + tmux (prefix `Ctrl+a`) + Alacritty/Ghostty, with a Neovim config
+zinit) + tmux (prefix `Ctrl+a`) + Alacritty, with a Neovim config
 built from scratch.
 
 Tracked in a **bare** repo at `$HOME/dotfiles.git` with `$HOME` as the work
@@ -25,8 +25,12 @@ lands. Use `config` exactly as you would `git`.
 **Dependencies:** AeroSpace (`brew install --cask nikitabobko/tap/aerospace`),
 `fzf`, `zoxide`, `nvm`, `pyenv`, `ripgrep`, `tree-sitter-cli`,
 `nvim` (0.9+, required by lazy.nvim), `tmux` +
-[TPM](https://github.com/tmux-plugins/tpm), and `rtk` + `peon-ping` for the
-Claude Code and OpenCode hooks.
+[TPM](https://github.com/tmux-plugins/tpm), `gh` (for `alacritty update`), and
+`rtk` + `peon-ping` for the Claude Code and OpenCode hooks.
+
+**Alacritty** isn't installed through Homebrew — the cask was disabled on
+2026-09-01 because the app isn't notarized. Once `.zshrc` is in place, run
+`alacritty update` to install it (see [Alacritty updates](#alacritty-updates)).
 
 ## What's tracked
 
@@ -38,7 +42,6 @@ Claude Code and OpenCode hooks.
 | [`.config/nvim/`](.config/nvim/init.lua) | Neovim | restart; `require` caches Lua modules |
 | [`.gitconfig`](.gitconfig) + [`.config/git/ignore`](.config/git/ignore) | git identity, difftool, global ignore (`.DS_Store`, `settings.local.json`) | immediate |
 | [`.config/alacritty/`](.config/alacritty/alacritty.toml) | terminal | quit and relaunch |
-| [`.config/ghostty/`](.config/ghostty/config) | terminal | `Cmd+Shift+,` |
 | [`.config/aerospace/`](.config/aerospace/aerospace.toml) | tiling window manager | automatic on save (`auto-reload-config`) |
 | [`.claude/`](.claude/settings.json) | Claude Code settings, instructions, statusline | immediate |
 | [`.config/opencode/`](.config/opencode/opencode.jsonc) | OpenCode global config, instructions, rtk plugin | `opencode reload`; restart for plugins |
@@ -182,6 +185,19 @@ Emacs-mode line editing. Every `Alt+…` binding needs the **right** Option key
 
 `cd` is untouched — zoxide only learns from it. Distinct from `Alt+c`, which
 browses *all* directories under the cwd; `z` only knows ones you've visited.
+
+### Alacritty updates
+
+| Command | Action |
+|---|---|
+| `alacritty update` / `alacritty upgrade` | install the latest GitHub release into `/Applications` |
+
+Downloads the release DMG with `gh` (which doesn't set the quarantine flag, so
+Gatekeeper lets the ad-hoc signed app run), replaces `Alacritty.app`, and
+re-links the `alacritty` terminfo entries into `~/.terminfo` that `TERM=alacritty`
+needs. Any other `alacritty …` call goes straight to the app's binary. Run it
+from inside tmux or another terminal; the new version applies to windows
+opened afterwards.
 
 ## Neovim
 
