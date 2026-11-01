@@ -200,6 +200,17 @@ needs. Any other `alacritty …` call goes straight to the app's binary. Run it
 from inside tmux or another terminal; the new version applies to windows
 opened afterwards.
 
+### afk
+
+| Command | Action |
+|---|---|
+| `afk` | turn the display off but keep the Mac awake until `Ctrl+c` |
+
+`pmset displaysleepnow` + `caffeinate -ims`: the Mac looks asleep (and locks, if
+a password is required after display off), while downloads, ssh and builds keep
+running. Moving the mouse wakes the display; `Ctrl+c` lets it sleep normally
+again. Closing the lid still sleeps it.
+
 ## Neovim
 
 ```
