@@ -3,6 +3,9 @@
 # Right Option sends Meta/Esc sequences to the terminal (Alt+k, Alt+w, etc).
 option_as_alt = "OnlyRight"
 
+[font]
+size = 13.0
+
 [cursor]
 # Blinking block cursor, easier to spot than the default static one.
 style = { shape = "Block", blinking = "Always" }

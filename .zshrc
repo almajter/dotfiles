@@ -160,6 +160,17 @@ alacritty() {
 }
 # <<< alacritty update <<<
 
+# >>> afk >>>
+# Turn the display off so the Mac looks asleep, but keep it awake (downloads,
+# ssh, builds keep running) until Ctrl-C. Moving the mouse wakes the display;
+# closing the lid still sleeps it.
+afk() {
+  echo "afk: display off, staying awake -- Ctrl-C to end"
+  pmset displaysleepnow
+  caffeinate -ims
+}
+# <<< afk <<<
+
 # >>> Aliases >>>
 alias vi='nvim'
 alias vim='nvim'
