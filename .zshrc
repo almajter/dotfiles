@@ -34,7 +34,7 @@ zinit snippet OMZL::key-bindings.zsh
 # nav keys. Physical Backspace still works via its own DEL/^? binding.
 bindkey -r '^H'
 bindkey '^G' clear-screen   # was ^L
-bindkey '^[k' kill-line     # was ^K
+bindkey '^[^K' kill-line    # Ctrl-Alt-k (was ^K, then Alt-k until AeroSpace claimed plain Alt)
 # <<< tmux pane-nav key fixes <<<
 
 # --- Theme (robbyrussell) ---
@@ -51,10 +51,9 @@ zinit wait lucid for \
   atinit"zicompinit; zicdreplay; compdef _tmux_sessions to tks" \
     zsh-users/zsh-syntax-highlighting
 
-# Alt+f accepts the current autosuggestion (Ctrl+Space is eaten by macOS
-# input-source switching before it reaches the terminal; Ctrl+f stays
-# forward-char since Alt+f's usual forward-word isn't needed here)
-bindkey '^[f' autosuggest-accept
+# Autosuggestion accept: Ctrl+f (forward-char) accepts the whole suggestion
+# when one is showing (zsh-autosuggestions default ACCEPT_WIDGETS), and moves
+# forward one character otherwise. No extra binding needed.
 
 # >>> nvm lazy initialize >>>
 export NVM_DIR="$HOME/.nvm"
@@ -179,3 +178,4 @@ alias k='kubectl'
 export do="--dry-run=client -o yaml"
 export now="--force --grace-period=0"
 # <<< Aliases <<<
+
